@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="Mapper.ArticleMapper">
+    <resultMap id="articleList" type="pojo.Article">
+        <result property="accountId" column="accountId"/>
+        <result property="username" column="username"/>
+        <result property="title" column="title"/>
+        <result property="article" column="article"/>
+        <result property="time" column="time"/>
+        <result property="img_url" column="img_url"/>
+    </resultMap>
+<!-- 动态sql -->
+    <sql id="insert-value">
+        <trim suffixOverrides=",">
+            <if test="accountId!=null">
+                #{accountId},
+            </if>
+
+            <if test="title!=null">
+                #{title},
+            </if>
+            <if test="username!=null">
+            #{username},
+            </if>
+            <if test="article!=null">
+                #{article},
+            </if>
+            <if test="time!=null">
+                #{time},
+            </if>
+        </trim>
+    </sql>
+    <!-- 按用户id查询 -->
+    <select id="findArticleById" parameterType="String" resultMap="articleList">
+        SELECT * FROM t_article
+        <where>
+            <if test="_parameter!=null and _parameter!=' '">
+                accountId = #{accountId}
+            </if>
+        </where>
+    </select>
+    <!-- 模糊查询 -->
+    <select id="findArticleByName" parameterType="pojo.Article" resultType="pojo.Article">
+        SELECT * FROM t_article
+        <where>
+            <if test="accountId != null">
+                accountId LIKE "%"#{accountId}"%"
+            </if>
+            <if test="title != null">
+                and title LIKE "%"#{title}"%"
+            </if>
+            <if test="time!=null">
+                and time LIKE "%"#{time}"%"
+            </if>
+        </where>
+    </select>
+<!-- 插入新的数据 -->
+    <insert id="addArticle" parameterType="pojo.Article">
+        INSERT INTO t_article(accountId,title,username,article,time)VALUE (<include refid="insert-value"/>)
+    </insert>
+
+</mapper>
