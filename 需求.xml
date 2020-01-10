@@ -1,9 +1,0 @@
-maven res:
-	 <!-- https://mvnrepository.com/artifact/com.github.skwakman.nodejs-maven-plugin/nodejs-maven-plugin -->
-        <dependency>
-            <groupId>com.github.skwakman.nodejs-maven-plugin</groupId>
-            <artifactId>nodejs-maven-plugin</artifactId>
-            <version>1.0.2</version>
-     </dependency>
-
-案例url:https://xcx.youletd.com/xcx/wechat/sniperbullet/v112/res/import/04/04d5ea186.f5709.json
